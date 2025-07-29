@@ -57,17 +57,9 @@ class PDFPageInterpreterEx(PDFPageInterpreter):
     def __init__(
         self, rsrcmgr: PDFResourceManager, device: PDFDevice, obj_patch
     ) -> None:
-        self.rsrcmgr = rsrcmgr
-        self.device = device
+        # 親クラスの初期化を呼び出す
+        super().__init__(rsrcmgr, device)
         self.obj_patch = obj_patch
-        # PDFのデフォルト色空間を設定
-        try:
-            from pdfminer.pdfcolor import PDFColorSpace
-            self.ncs = PDFColorSpace.PREDEFINED['DeviceGray']
-            self.scs = PDFColorSpace.PREDEFINED['DeviceGray']
-        except:
-            self.ncs = None
-            self.scs = None
 
     def dup(self) -> "PDFPageInterpreterEx":
         return self.__class__(self.rsrcmgr, self.device, self.obj_patch)
