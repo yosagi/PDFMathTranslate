@@ -60,20 +60,11 @@ class PDFPageInterpreterEx(PDFPageInterpreter):
         # 親クラスの初期化を呼び出す
         super().__init__(rsrcmgr, device)
         self.obj_patch = obj_patch
-        # ncs/scsが初期化されていない場合はデフォルト色空間を設定
-        if not hasattr(self, 'ncs') or self.ncs is None:
-            try:
-                from pdfminer.pdfcolor import PDFColorSpace
-                # デフォルトの白背景用色空間
-                self.ncs = PDFColorSpace.PREDEFINED.get('DeviceRGB')
-            except:
-                self.ncs = None
-        if not hasattr(self, 'scs') or self.scs is None:
-            try:
-                from pdfminer.pdfcolor import PDFColorSpace
-                self.scs = PDFColorSpace.PREDEFINED.get('DeviceRGB')
-            except:
-                self.scs = None
+        # ncs/scsが初期化されていない場合は最小限の設定
+        if not hasattr(self, 'ncs'):
+            self.ncs = None
+        if not hasattr(self, 'scs'):
+            self.scs = None
 
     def dup(self) -> "PDFPageInterpreterEx":
         return self.__class__(self.rsrcmgr, self.device, self.obj_patch)
@@ -238,14 +229,11 @@ class PDFPageInterpreterEx(PDFPageInterpreter):
                 [xobj],
                 ctm=ctm,
             )
-            # 色空間の継承を改善
-            if hasattr(interpreter, 'ncs') and interpreter.ncs is not None:
+            # 色空間継承: 存在確認のみで、Noneでも上書きしない
+            if hasattr(interpreter, 'ncs'):
                 self.ncs = interpreter.ncs
-            # interpreterに色空間がない場合は親から継承を維持
-            
-            if hasattr(interpreter, 'scs') and interpreter.scs is not None:
+            if hasattr(interpreter, 'scs'):
                 self.scs = interpreter.scs
-            # interpreterに色空間がない場合は親から継承を維持
             try:  # 有的时候 form 字体加不上这里会烂掉
                 self.device.fontid = interpreter.fontid
                 self.device.fontmap = interpreter.fontmap
