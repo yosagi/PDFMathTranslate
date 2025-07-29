@@ -2,6 +2,17 @@ name: Feature request
 description: Suggest an idea for this project
 labels: ['enhancement']
 body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 2.0 is released! new repo is [HERE](https://github.com/PDFMathTranslate/PDFMathTranslate-next)
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you asking
+      options:
+      - label: I have tried the PDFMathTranslate-next and give feedback in PDFMathTranslate-next
+        required: true
   - type: textarea
     id: describe
     attributes:

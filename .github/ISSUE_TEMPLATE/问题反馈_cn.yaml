@@ -2,11 +2,17 @@ name: 上报 Bug
 description: 使用中文进行 Bug 报告
 labels: ['bug']
 body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 2.0 is released! new repo is [HERE](https://github.com/PDFMathTranslate/PDFMathTranslate-next)
   - type: checkboxes
     id: checks
     attributes:
       label: 在提问之前...
       options:
+      - label: 我已经尝试了PDFMathTranslate-next,并在PDFMathTranslate-next提交了issue
+        required: true
       - label: 我已经搜索了现有的 issues
         required: true
       - label: 我在提问题之前至少花费了 5 分钟来思考和准备
@@ -24,15 +30,10 @@ body:
     id: environment
     attributes:
       label: 使用的环境
-      description: |
-        examples:
+      placeholder: |
           - **OS**: Ubuntu 24.10  
           - **Python**: 3.12.0  
           - **pdf2zh**: 1.9.0
-      value: |
-          - OS:
-          - Python:
-          - pdf2zh:
       render: markdown
     validations:
       required: false
