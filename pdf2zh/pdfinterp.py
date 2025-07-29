@@ -60,6 +60,8 @@ class PDFPageInterpreterEx(PDFPageInterpreter):
         self.rsrcmgr = rsrcmgr
         self.device = device
         self.obj_patch = obj_patch
+        self.ncs = None
+        self.scs = None
 
     def dup(self) -> "PDFPageInterpreterEx":
         return self.__class__(self.rsrcmgr, self.device, self.obj_patch)
