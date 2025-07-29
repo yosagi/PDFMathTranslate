@@ -224,8 +224,10 @@ class PDFPageInterpreterEx(PDFPageInterpreter):
                 [xobj],
                 ctm=ctm,
             )
-            self.ncs = interpreter.ncs
-            self.scs = interpreter.scs
+            if hasattr(interpreter, 'ncs'):
+                self.ncs = interpreter.ncs
+            if hasattr(interpreter, 'scs'):
+                self.scs = interpreter.scs
             try:  # 有的时候 form 字体加不上这里会烂掉
                 self.device.fontid = interpreter.fontid
                 self.device.fontmap = interpreter.fontmap
