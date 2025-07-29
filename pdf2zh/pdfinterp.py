@@ -60,6 +60,11 @@ class PDFPageInterpreterEx(PDFPageInterpreter):
         # 親クラスの初期化を呼び出す
         super().__init__(rsrcmgr, device)
         self.obj_patch = obj_patch
+        # ncs/scsが初期化されていない場合は設定
+        if not hasattr(self, 'ncs'):
+            self.ncs = None
+        if not hasattr(self, 'scs'):
+            self.scs = None
 
     def dup(self) -> "PDFPageInterpreterEx":
         return self.__class__(self.rsrcmgr, self.device, self.obj_patch)
